@@ -61,6 +61,9 @@ data.head(10) # Print the first 10 data entries
 # Now let us get rid of the data frame to keep only Numpy arrays.
 
 # %%
+X = data[['bias', 'positive', 'negative']].values
+X
+# %%
 # Each feature is labeled as bias, positive and negative
 X = data[['bias', 'positive', 'negative']].values # Get only the numerical values of the dataframe
 Y = data['sentiment'].values; # Put in Y the corresponding labels or sentiments
@@ -83,6 +86,10 @@ theta = [7e-08, 0.0005239, -0.00055517]
 # 
 # If we ignore the bias term, we can plot each tweet in a cartesian plane, using `positive_sum` and `negative_sum`. In the cell below, we do precisely this. Additionally, we color each tweet, depending on its class. Positive tweets will be green and negative tweets will be red.
 
+# %%
+X[:,1]
+
+Y
 # %%
 # Plot the samples using columns 1 and 2 of the matrix
 fig, ax = plt.subplots(figsize = (8, 8))
@@ -144,6 +151,14 @@ plt.ylabel("Negative")
 # Now lets represent the logistic regression model in this chart. 
 maxpos = np.max(X[:,1])
 
+# %%
+print(maxpos)
+
+# %%
+neg(theta, maxpos)
+
+#%%
+
 offset = 5000 # The pos value for the direction vectors origin
 
 # Plot a gray line that divides the 2 areas.
@@ -161,5 +176,11 @@ plt.show()
 # 
 # That is all, folks. Hopefully, now you understand better what the Logistic regression model represents, and why it works that well for this specific problem. 
 
+
+# %%
+
+# %%
+
+# %%
 
 # %%

@@ -15,14 +15,11 @@
 # %% [markdown]
 # ## Import functions and data
 
-
-
 # %%
 # run this cell to import nltk
 import nltk
 from os import getcwd
 
-from modules.utils import process_tweet, build_freqs
 # %% [markdown]
 # ### Imported functions
 # 
@@ -50,12 +47,12 @@ filePath = f"{getcwd()}/../tmp2/"
 nltk.data.path.append(filePath)
 
 
-
 # %%
 import numpy as np
 import pandas as pd
 from nltk.corpus import twitter_samples 
 
+from modules.utils import process_tweet, build_freqs
 
 # %% [markdown]
 # ### Prepare the data
@@ -89,7 +86,6 @@ test_x = test_pos + test_neg
 # combine positive and negative labels
 train_y = np.append(np.ones((len(train_pos), 1)), np.zeros((len(train_neg), 1)), axis=0)
 test_y = np.append(np.ones((len(test_pos), 1)), np.zeros((len(test_neg), 1)), axis=0)
-
 
 
 # %%
@@ -179,7 +175,6 @@ print('\nThis is an example of the processed version of the tweet: \n', process_
 
 # %%
 # UNQ_C1 (UNIQUE CELL IDENTIFIER, DO NOT EDIT)
-import math
 def sigmoid(z): 
     '''
     Input:
@@ -190,7 +185,7 @@ def sigmoid(z):
     
     ### START CODE HERE (REPLACE INSTANCES OF 'None' with your code) ###
     # calculate the sigmoid of z
-    h = 1 / (1 + np.exp(-z))
+    h = 1 / (1+ np.exp(-z))
     ### END CODE HERE ###
     
     return h
@@ -321,24 +316,26 @@ def gradientDescent(x, y, theta, alpha, num_iters):
     '''
     ### START CODE HERE (REPLACE INSTANCES OF 'None' with your code) ###
     # get 'm', the number of rows in matrix x
-    m = len(tmp_X)
+    m = len(x)
     
     for i in range(0, num_iters):
         
+    
         # get z, the dot product of x and theta
-        z = np.dot(x, theta)
+        z = np.dot(theta.T, x.T)
         
         # get the sigmoid of z
         h = sigmoid(z)
         # calculate the cost function
-        J = -1/m * (np.dot(y.T, np.log(h)) + np.dot((1-y).T, np.log(1-h)))
+        J = -1/m * (np.dot(y.T,  np.log(h).T) + np.dot((1-y).T,np.log(1-h).T))
 
         # update the weights theta
-        theta = theta - alpha/m * np.dot(x.T, (h - y))
+        theta = theta - alpha / m * np.dot(x.T, (h.T-y))
         
     ### END CODE HERE ###
     J = float(J)
     return J, theta
+
 
 # %%
 # Check the function
@@ -414,23 +411,19 @@ def extract_features(tweet, freqs):
     for word in word_l:
         
         # increment the word count for the positive label 1
-        if (word, 1.0) in freqs:
-            x[0,1] += freqs[(word, 1.0)]
+        if (word, 1) in freqs:
+            x[0,1] += freqs[(word, 1)]
         
         # increment the word count for the negative label 0
         if (word, 0) in freqs:
-            x[0,2] += freqs[(word, 0.0)]
+            x[0,2] += freqs[(word, 0)]
         
     ### END CODE HERE ###
     assert(x.shape == (1, 3))
     return x
 
 # %%
-process_tweet(train_x[0])
-x = np.zeros((1, 3)) 
-print(x)
-print(train_y[0])
-
+freqs
 
 # %%
 # Check your function
@@ -465,6 +458,8 @@ print(tmp2)
 # * Call `gradientDescent`, which you've implemented above.
 # 
 # This section is given to you.  Please read it for understanding and run the cell.
+
+
 
 # %%
 # collect the features 'x' and stack them into a matrix 'X'
@@ -518,7 +513,10 @@ def predict_tweet(tweet, freqs, theta):
     x = extract_features(tweet, freqs)
     
     # make the prediction using x and theta
-    y_pred = sigmoid(np.dot(x, theta))
+    z = np.dot(theta.T, x.T)
+        
+    # get the sigmoid of z
+    y_pred = sigmoid(z)
     
     ### END CODE HERE ###
     
@@ -604,6 +602,7 @@ def test_logistic_regression(test_x, test_y, freqs, theta):
     test_y = np.squeeze(test_y)
     accuracy = (y_hat == test_y).sum()/len(test_x)
 
+
     ### END CODE HERE ###
     
     return accuracy
@@ -650,11 +649,5 @@ else:
     print('Negative sentiment')
 
 
-
-# %%
-
-# %%
-
-# %%
 
 # %%

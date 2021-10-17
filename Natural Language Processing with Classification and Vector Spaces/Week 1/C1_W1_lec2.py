@@ -10,8 +10,6 @@
 # 
 # Let's import the required libraries for this lab: 
 
-#%%
-pip install matplotlib
 
 # %%
 import nltk                                  # Python library for NLP
@@ -272,3 +270,7 @@ plt.show()
 # %% [markdown]
 # ### That's all for this lab! We've seen how to build a word frequency dictionary and this will come in handy when extracting the features of a list of tweets. Next up, we will be reviewing Logistic Regression. Keep it up!
 
+
+# %%
+
+# %%
