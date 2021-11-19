@@ -12,6 +12,9 @@
 # For this exercise, we will use a Twitter dataset that comes with NLTK. This dataset has been manually annotated and serves to establish baselines for models quickly. Let us import them now as well as a few other libraries we will be using.
 
 # %%
+pip install matplotlib
+
+# %%
 import nltk                                # Python library for NLP
 from nltk.corpus import twitter_samples    # sample Twitter dataset from NLTK
 import matplotlib.pyplot as plt            # library for visualization
@@ -125,6 +128,9 @@ from nltk.tokenize import TweetTokenizer   # module for tokenizing strings
 # 
 # Since we have a Twitter dataset, we'd like to remove some substrings commonly used on the platform like the hashtag, retweet marks, and hyperlinks. We'll use the [re](https://docs.python.org/3/library/re.html) library to perform regular expression operations on our tweet. We'll define our search pattern and use the `sub()` method to remove matches by substituting with an empty character (i.e. `''`)
 
+
+# %%
+print('\033[94m')
 # %%
 print('\033[92m' + tweet)
 print('\033[94m')
@@ -253,7 +259,7 @@ print(tweets_stem)
 # To obtain the same result as in the previous code cells, you will only need to call the function `process_tweet()`. Let's do that in the next cell.
 
 # %%
-from utils import process_tweet # Import the process_tweet function
+from modules.utils import process_tweet # Import the process_tweet function
 
 # choose the same tweet
 tweet = all_positive_tweets[2277]
@@ -272,3 +278,9 @@ print(tweets_stem) # Print the result
 # %% [markdown]
 # That's it for this lab! You now know what is going on when you call the preprocessing helper function in this week's assignment. Hopefully, this exercise has also given you some insights on how to tweak this for other types of text datasets.
 
+
+# %%
+
+# %%
+
+# %%
